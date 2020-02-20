@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  rate: 1
+  parental_rate: 1
+  published_at: 2020-02-18
+  category_id: 1
+  genre_id: 1
+  author_id: 1
+  comic_file_name: MyString
+  comic_content_type: MyString
+  comic_file_size: 1
+  cover: MyText
+  comic_path: MyString
+
+two:
+  title: MyString
+  description: MyText
+  rate: 1
+  parental_rate: 1
+  published_at: 2020-02-18
+  category_id: 1
+  genre_id: 1
+  author_id: 1
+  comic_file_name: MyString
+  comic_content_type: MyString
+  comic_file_size: 1
+  cover: MyText
+  comic_path: MyString
