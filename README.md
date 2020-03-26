@@ -1,24 +1,20 @@
-# README
+# Manga Reader
+____________________
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## This is a simple app to read manga, created just for fun
 
-Things you may want to cover:
+### Make sure you have ruby 2.7.0 installed
 
-* Ruby version
+### Also make sure you have the MongoDB database installed
 
-* System dependencies
+#### Then run:
 
-* Configuration
+`bundle install`
 
-* Database creation
+#### Finally:
 
-* Database initialization
+`rails s`
 
-* How to run the test suite
+**Obs**: *We are using a NoSQL database, so migrations are not needed*
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Be happy.
