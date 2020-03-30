@@ -5,6 +5,7 @@ class Comic
   field :rate, type: Integer
   field :adult, type: Mongoid::Boolean
   field :cover, type: String
+  field :published_at, type: Date
 
   belongs_to :category
   belongs_to :author
