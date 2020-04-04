@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  post 'sessions/create'
+  get 'sessions/destroy'
+  resources :users
   resources :authors
   resources :comics
   resources :categories
