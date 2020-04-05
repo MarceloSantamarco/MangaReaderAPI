@@ -4,7 +4,11 @@ class ApplicationController < ActionController::API
         token = decoded_token
         unless token.blank?
             email = token[0]['email']
-            @current_user = User.find_by(email: email)
+            begin
+                @current_user = User.find_by(email: email)
+            rescue
+                return il
+            end
         else
             return nil
         end
@@ -20,8 +24,8 @@ class ApplicationController < ActionController::API
 
     def decoded_token
         header = request.headers['Authorization']
-        if request.headers['Authorization']
-            token = request.headers['Authorization'].split(' ')[1]
+        if header
+            token = header.split(' ')[1]
             begin
                 JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
             rescue

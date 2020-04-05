@@ -5,4 +5,5 @@ class User
   field :encrypted_password, type: String
   field :phone, type: String
   field :birthdate, type: Date
+  field :admin, type: Boolean
 end

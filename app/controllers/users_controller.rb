@@ -15,13 +15,20 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    binding.pry
     @user = User.new(user_params)
 
-    @user.encrypted_password = BCrypt::Password.create(@user.encrypted_password)
+    if User.where(email: @user.email).present?
+      render json: {error: "Email already exists!"}, status: 401
+      return nil
+    elsif !params[:password_confirmation] || (params[:password] != params[:password_confirmation])
+      render json: {error: "Password and confirmation doesn't match!"}, status: 401
+      return nil
+    end
+      
+    @user.encrypted_password = BCrypt::Password.create(user_params[:password])
 
     if @user.save!
-      render json: @user, status: :created, location: @user
+      render json: @user, status: :created, location: @user, message: 'User created successfully!'
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -49,6 +56,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :email, :encrypted_password, :phone, :birthdate)
+      params.require(:user).permit(:name, :email, :password, :password, :phone, :birthdate)
     end
 end
