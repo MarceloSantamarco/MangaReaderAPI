@@ -1,6 +1,6 @@
 class ComicGenre
   include Mongoid::Document
 
-  belongs_to :genre
-  belongs_to :comic
+  belongs_to :genre, dependent: :destroy
+  belongs_to :comic, dependent: :destroy
 end

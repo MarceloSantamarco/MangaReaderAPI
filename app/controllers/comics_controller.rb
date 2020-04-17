@@ -1,5 +1,5 @@
 class ComicsController < ApplicationController
-  before_action :set_comic, only: [:show, :update, :destroy]
+  before_action :set_comic, only: [:show, :update, :comic_genre, :comic_author, :destroy]
 
   # GET /comics
   def index
@@ -17,11 +17,32 @@ class ComicsController < ApplicationController
   def create
     @comic = Comic.new(comic_params)
 
-    if @comic.save
+    @comic.author_id = Author.find_by(name: params[:author])
+    @comic.category_id = Category.find(params[:category])
+
+    if @comic.save!
+      params[:genres].each do |gen|
+        comic_genre = ComicGenre.new(genre_id: Genre.find_by(name: gen).id, comic_id: @comic.id)
+        comic_genre.save!
+      end
       render json: @comic, status: :created, location: @comic
     else
       render json: @comic.errors, status: :unprocessable_entity
     end
+  end
+
+  # GET /comics/1/comic_genre
+  def comic_genre
+    ids = ComicGenre.where(comic_id: @comic.id).map(&:genre_id)
+    genres = []
+    ids.each do |id|
+      genres << Genre.where(id: id)
+    end
+    render json: genres.flatten
+  end
+
+  def comic_author
+    render json: Author.find(@comic.author_id)
   end
 
   # PATCH/PUT /comics/1
@@ -41,7 +62,7 @@ class ComicsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comic
-      @comic = Comic.find(params[:id])
+        @comic = Comic.find(params[:id] ||= params[:comic_id])
     end
 
     # Only allow a trusted parameter "white list" through.

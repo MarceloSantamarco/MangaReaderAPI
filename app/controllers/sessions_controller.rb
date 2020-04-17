@@ -1,6 +1,11 @@
 class SessionsController < ApplicationController
   
   def create
+    if user_signed_in?
+      render json: {error: 'User already logged'}, status: 401
+      return nil
+    end
+
     begin
       @user = User.find_by(email: session_params[:email])
     rescue
@@ -13,17 +18,9 @@ class SessionsController < ApplicationController
         email: @user.email
       }
       token = encode_token(payload)
-      render json: {success: 'User signed in successfully!', user: {@user.email, @user.name}, token: token}, status: :ok
+      render json: {success: 'User signed in successfully!', user: {email: @user.email, name: @user.name}, token: token}, status: :ok
     else
-      render json: {error: "Invalid password"}, status: 404
-    end
-  end
-
-  def destroy
-    if user_signed_in?
-      render json: {success: 'User signed out successfully'}, status: :ok
-    else
-      render json: {error: 'What the hell are you doing??'}, status: 404
+      render json: {error: "Invalid password"}, status: 401
     end
   end
 
