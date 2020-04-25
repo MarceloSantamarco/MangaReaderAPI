@@ -45,6 +45,21 @@ class ComicsController < ApplicationController
     render json: Author.find(@comic.author_id)
   end
 
+  def related_comics
+    if params[:genre].present?
+      comic_genres = ComicGenre.where(genre_id: Genre.find_by(name: params[:genre]).id)
+      comics = []
+      comic_genres.each do |cg|
+        comics << Comic.where(id: cg.comic_id)
+      end
+      render json: comics.flatten
+    elsif params[:category].present?
+      render json: Comic.where(category_id: Category.find_by(name: params[:category]).id)
+    elsif params[:author].present?
+      render json: Comic.where(author_id: Author.find_by(name: params[:author]).id)
+    end
+  end
+
   # PATCH/PUT /comics/1
   def update
     if @comic.update(comic_params)
@@ -56,17 +71,18 @@ class ComicsController < ApplicationController
 
   # DELETE /comics/1
   def destroy
+    @comic.comic_genres.destroy
     @comic.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comic
-        @comic = Comic.find(params[:id] ||= params[:comic_id])
+      @comic = Comic.find(params[:id] ||= params[:comic_id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def comic_params
-      params.require(:comic).permit(:title, :description, :rate, :adult, :cover, :published_at)
+      params.require(:comic).permit(:title, :description, :rate, :adult, :published_at, :cover)
     end
 end
