@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :categories
   resources :genres
   resources :search, only: :index
-  resources :favorites, only: [:index, :create, :destroy]
+  resources :favorites
+  resources :ratings, only: [:index, :create]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

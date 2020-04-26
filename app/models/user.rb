@@ -8,5 +8,5 @@ class User
   field :admin, type: Boolean
 
   has_many :favorites
-  has_many :ratings
+  has_many :rates
 end

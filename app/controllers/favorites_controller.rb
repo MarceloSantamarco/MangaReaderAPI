@@ -9,6 +9,11 @@ class FavoritesController < ApplicationController
     end
 
     def create 
+        if @current_user.favorites.where(comic_id: @comic.id).first
+            render json: {error: 'Already exists'}, status: 402
+            return
+        end
+
         @favorite = @current_user.favorites.new(comic_id: @comic.id)
 
         if @favorite.save!
@@ -19,13 +24,15 @@ class FavoritesController < ApplicationController
     end
 
     def destroy
-        binding.pry
-        @favorite = @current_user.favorites
+        @favorite = @current_user.favorites.where(comic_id: @comic.id)
+        @favorite.destroy
+
+        head :ok
     end
 
     private
 
     def set_comic
-        @comic = Comic.find(params[:comic_id])
+        @comic = Comic.find(params[:comic_id] ||= params[:id])
     end
 end
