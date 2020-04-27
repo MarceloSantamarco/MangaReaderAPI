@@ -9,4 +9,5 @@ class User
 
   has_many :favorites
   has_many :rates
+  has_many :comments
 end

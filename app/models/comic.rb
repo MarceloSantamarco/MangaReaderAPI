@@ -11,6 +11,9 @@ class Comic
   belongs_to :category
   belongs_to :author
 
+  has_many :comments
+  has_many :rates
+
   validates :title, presence: true
   validates :description, presence: true, length: { maximum: 500 }
   validates :adult, presence: true

@@ -8,6 +8,19 @@ class RatingsController < ApplicationController
         render json: @ratings
     end
 
+    def ratings_count
+        @ratings = Rate.where(comic_id: @comic.id).map(&:rate)
+        count = []
+        
+        5.times do |i|
+            count[i+1] = 0
+        end
+
+        @ratings.map{ |rate| count[rate]+=1 }
+
+        render json: count, status: :ok
+    end
+
     def create
         @rating = @current_user.rates.new(comic_id: @comic.id, rate: params[:rate])
 
