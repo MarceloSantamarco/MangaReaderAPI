@@ -1,5 +1,5 @@
 class RatingsController < ApplicationController
-    before_action :require_login
+    before_action :require_login, except: [:ratings_count]
     before_action :set_comic, except: [:index]
 
     def index
@@ -18,7 +18,7 @@ class RatingsController < ApplicationController
 
         @ratings.map{ |rate| count[rate]+=1 }
 
-        render json: count, status: :ok
+        render json: {one: count[1], two: count[2], three: count[3], four: count[4], five: count[5]}, status: :ok
     end
 
     def create

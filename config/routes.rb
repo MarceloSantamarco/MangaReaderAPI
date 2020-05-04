@@ -17,5 +17,5 @@ Rails.application.routes.draw do
   resources :ratings, only: [:index, :create]
   get 'ratings_count', to: 'ratings#ratings_count'
 
-  resources :comments, only: [:index, :create]
+  resources :comments, only: [:index, :create, :destroy]
 end

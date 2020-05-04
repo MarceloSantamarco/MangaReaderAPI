@@ -24,8 +24,8 @@ class UsersController < ApplicationController
       render json: {error: "Password and confirmation doesn't match!"}, status: 401
       return nil
     end
-      
-    @user.encrypted_password = BCrypt::Password.create(user_params[:password])
+
+    @user.encrypted_password = BCrypt::Password.create(params[:password])
 
     if @user.save!
       render json: @user, status: :created, location: @user, message: 'User created successfully!'
@@ -56,6 +56,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password, :phone, :birthdate)
+      params.require(:user).permit(:name, :email, :phone, :birthdate, :admin)
     end
 end

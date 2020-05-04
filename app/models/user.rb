@@ -6,6 +6,7 @@ class User
   field :phone, type: String
   field :birthdate, type: Date
   field :admin, type: Boolean
+  field :photo, type: String
 
   has_many :favorites
   has_many :rates
