@@ -9,6 +9,7 @@ development:
       # Provides the hosts the default client can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
+        #- 192.168.99.100:27017 docker machine ip
         - localhost:27017
       options:
         # Note that all options listed below are Ruby driver client options (the mongo gem).
