@@ -71,7 +71,7 @@ class ComicsController < ApplicationController
 
   # DELETE /comics/1
   def destroy
-    @comic.comic_genres.destroy
+    @comic.comic_genres.destroy if @comic.comic_genres
     @comic.destroy
   end
 

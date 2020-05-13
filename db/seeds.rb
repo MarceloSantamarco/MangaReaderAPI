@@ -10,9 +10,30 @@ genres = [
 ]
 
 categories.each do |cat|
-    Category.create(name: cat)
+    Category.find_or_create_by(name: cat)
 end
 
 genres.each do |gen|
-    Genre.create(name: gen)
+    Genre.find_or_create_by(name: gen)
+end
+
+Author.find_or_create_by(name: 'Sui Ishida')
+
+unless Comic.first.present?
+    manga = Comic.create(
+        title: 'Tokyo Ghoul',
+        description: 'Em Tokyo, criaturas conhecidas como "Ghouls" vivem entre os humanos e os devoram para sobreviver. 
+            Alheio a eles, o jovem universitário Ken Kaneki leva uma vida pacata entre livros, até que um trágico encontro o 
+            coloca diante desses seres e o obriga a lutar por sua humanidade.',
+        adult: 1,
+        cover: 'mangareader-a41a3.appspot.com/covers/1587344922644tokyo_ghoul.jpg',
+        published_at: Time.now,
+        status: 'Finished',
+        author: Author.find_by(name: 'Sui Ishida').id,
+        category: Category.find_by(name: 'Manga').id,
+    )
+
+    ['Psychological', 'Shounen', 'Horror', 'Action'].each do |gen|
+        ComicGenre.create(genre_id: Genre.find_by(name: gen).id, comic_id: manga.id)
+    end
 end

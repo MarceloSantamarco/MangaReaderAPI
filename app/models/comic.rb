@@ -13,6 +13,7 @@ class Comic
 
   has_many :comments
   has_many :rates
+  has_many :comic_genres
 
   validates :title, presence: true
   validates :description, presence: true, length: { maximum: 500 }
