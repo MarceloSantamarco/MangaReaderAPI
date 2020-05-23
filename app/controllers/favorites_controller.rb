@@ -1,9 +1,21 @@
 class FavoritesController < ApplicationController
     before_action :require_login
-    before_action :set_comic
+    before_action :set_comic, except: [:index, :user_favorites]
 
     def index
         @favorites = @current_user.favorites
+
+        render json: @favorites
+    end
+
+    def user_favorites
+        ids = @current_user.favorites.map(&:comic_id)
+
+        @favorites = []
+
+        ids.each do |comic_id|
+            @favorites << Comic.find(comic_id)
+        end
 
         render json: @favorites
     end

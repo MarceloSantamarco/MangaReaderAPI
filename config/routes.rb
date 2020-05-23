@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   resources :categories
   resources :genres
   resources :search, only: :index
+
   resources :favorites
+  get 'user_favorites', to: 'favorites#user_favorites'
 
   resources :ratings, only: [:index, :create]
   get 'ratings_count', to: 'ratings#ratings_count'
