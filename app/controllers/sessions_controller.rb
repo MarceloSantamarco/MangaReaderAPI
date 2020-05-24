@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
         email: @user.email
       }
       token = encode_token(payload)
-      render json: {success: 'User signed in successfully!', user: {id: @user.id, email: @user.email, name: @user.name, token: token}}, status: :ok
+      render json: {user: {id: @user.id, email: @user.email, name: @user.name, token: token}}, status: :ok
     else
       render json: {error: "Invalid password"}, status: 401
     end

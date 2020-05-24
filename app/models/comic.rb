@@ -6,7 +6,7 @@ class Comic
   field :adult, type: Mongoid::Boolean
   field :cover, type: String
   field :published_at, type: Date
-  field :status, type: String
+  field :status, type: Mongoid::Boolean
 
   belongs_to :category
   belongs_to :author
@@ -20,7 +20,4 @@ class Comic
   validates :adult, presence: true
   validates :published_at, presence: true
 
-  after_create do
-    self.rate = 0
-  end
 end

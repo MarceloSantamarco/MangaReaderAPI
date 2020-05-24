@@ -26,13 +26,14 @@ unless Comic.first.present?
             Alheio a eles, o jovem universitário Ken Kaneki leva uma vida pacata entre livros, até que um trágico encontro o 
             coloca diante desses seres e o obriga a lutar por sua humanidade.',
         adult: 1,
-        cover: 'mangareader-a41a3.appspot.com/covers/1587344922644tokyo_ghoul.jpg',
-        published_at: Time.now,
+        cover: 'gs://mangareader-a41a3.appspot.com/covers/tokyo_ghoul.jpg',
+        published_at: '2014/10/17',
         status: 'Finished',
         author: Author.find_by(name: 'Sui Ishida').id,
         category: Category.find_by(name: 'Manga').id,
+        rate: 0.0
     )
-
+    
     ['Psychological', 'Shounen', 'Horror', 'Action'].each do |gen|
         ComicGenre.create(genre_id: Genre.find_by(name: gen).id, comic_id: manga.id)
     end

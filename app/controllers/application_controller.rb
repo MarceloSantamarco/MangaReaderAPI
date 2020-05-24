@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
             begin
                 @current_user = User.find_by(email: email)
             rescue
-                return il
+                return nil
             end
         else
             return nil

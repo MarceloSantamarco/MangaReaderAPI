@@ -19,7 +19,8 @@ class ComicsController < ApplicationController
 
     @comic.author_id = Author.find_by(name: params[:author])
     @comic.category_id = Category.find(params[:category])
-
+    @comic.rate = 0
+    
     if @comic.save!
       params[:genres].each do |gen|
         comic_genre = ComicGenre.new(genre_id: Genre.find_by(name: gen).id, comic_id: @comic.id)
@@ -71,7 +72,12 @@ class ComicsController < ApplicationController
 
   # DELETE /comics/1
   def destroy
+    Favorite.where(comic_id: @comic.id).destroy
+    Rate.where(comic_id: @comic.id).destroy
+
     @comic.comic_genres.destroy if @comic.comic_genres
+    @comic.comments.destroy if @comic.comments
+    
     @comic.destroy
   end
 
@@ -83,6 +89,6 @@ class ComicsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def comic_params
-      params.require(:comic).permit(:title, :description, :rate, :adult, :published_at, :cover)
+      params.require(:comic).permit(:title, :description, :rate, :adult, :published_at, :cover, :status)
     end
 end
