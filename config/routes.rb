@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   get 'ratings_count', to: 'ratings#ratings_count'
 
   resources :comments, only: [:index, :create, :destroy]
+
+  resources :chapters
 end
