@@ -3,8 +3,8 @@ class ComicsController < ApplicationController
 
   # GET /comics
   def index
-    @comics = Comic.all
-
+    @comics = Comic.all.order('title ASC')
+    
     render json: @comics
   end
 

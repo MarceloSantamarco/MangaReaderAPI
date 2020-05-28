@@ -22,4 +22,7 @@ Rails.application.routes.draw do
   resources :comments, only: [:index, :create, :destroy]
 
   resources :chapters
+
+  resources :time_line, only: [:index]
+  get 'user_time_line', to: 'time_line#user_time_line'
 end
