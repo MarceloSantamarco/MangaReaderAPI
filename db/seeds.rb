@@ -1,3 +1,13 @@
+User.find_or_create_by(
+    name: 'Admin',
+    email: 'admin@admin.com',
+    encrypted_password: BCrypt::Password.create('admin'),
+    phone: '11988788765',
+    birthdate: Time.now,
+    admin: 1,
+    photo: 'gs://mangareader-a41a3.appspot.com/users/5ec9b7ebabd3ae00c8de96f6_photo'
+)
+
 categories = ["Manga", "Web comic", "HQ", "Manhwa"]
 
 genres = [
@@ -36,5 +46,14 @@ unless Comic.first.present?
     
     ['Psychological', 'Shounen', 'Horror', 'Action'].each do |gen|
         ComicGenre.create(genre_id: Genre.find_by(name: gen).id, comic_id: manga.id)
+    end
+
+    5.times do |i|
+        Chapter.create(
+            title: i+1,
+            folder: "gs://mangareader-a41a3.appspot.com/chapters/5ec9e8c8abd3ae1fecca7cc4/#{i+1}",
+            created_at: Time.now,
+            comic_id: manga.id
+        )
     end
 end

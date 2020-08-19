@@ -1,7 +1,6 @@
 FROM ruby:2.6.5
 
-RUN apt-get update -qq && apt-get install -y build-essential
-RUN gem install bundler
+RUN apt-get update -qq && gem install bundler
 
 RUN mkdir /MangaReader
 WORKDIR /MangaReader

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   post 'sessions/create'
+
   resources :users
+  post 'forgot_password', to: 'users#forgot_password'
+
   resources :authors
 
   resources :comics do

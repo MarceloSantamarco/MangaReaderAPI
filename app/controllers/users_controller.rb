@@ -48,6 +48,22 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
+  def forgot_password
+    if User.where(email: params[:email]).present?
+      new_password = SecureRandom.hex(4)
+      @user = User.find_by(email: params[:email])
+      @user.encrypted_password = BCrypt::Password.create(new_password)
+      if @user.save!
+        UserMailer.with(user: @user, password: new_password).forgot_password.deliver_now
+        head :ok
+      else
+        render json: @user.errors, status: :unprocessable_entity
+      end
+    else
+      render json: {error: 'Not exists'}, status: 404
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

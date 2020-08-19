@@ -1,12 +1,12 @@
 version: '3'
 services:
-  web:
-    build: ../MangaReaderApp/
-    command: yarn run serve
-    ports:
-      - "80:8080"
-    volumes:
-      - ./web:/app
+  # web:
+  #   build: ../MangaReaderApp/
+  #   command: yarn run serve
+  #   ports:
+  #     - "80:8080"
+  #   volumes:
+  #     - ./web:/app
   api:
     build: ./
     command: rails s -p 3000 -b '0.0.0.0'
