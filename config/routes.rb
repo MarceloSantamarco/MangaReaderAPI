@@ -28,4 +28,6 @@ Rails.application.routes.draw do
 
   resources :time_line, only: [:index]
   get 'user_time_line', to: 'time_line#user_time_line'
+
+  resources :most_read, only: [:index, :create]
 end
